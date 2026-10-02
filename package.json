@@ -1,0 +1,32 @@
+{
+  "name": "ticketing-app-e2e",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "End-to-end tests (Playwright) for the Matchpass ticketing app in ../ticketing-app-frontend-monorepo.",
+  "scripts": {
+    "build:app": "pnpm --dir ../ticketing-app-frontend-monorepo exec turbo run build --filter=matchpass-web --filter=mock-api",
+    "test": "playwright test",
+    "test:full": "pnpm build:app && playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "report": "playwright show-report",
+    "install:browsers": "playwright install --with-deps chromium firefox webkit",
+    "test:chrome": "playwright test --project=desktop-chrome --project=mobile-chrome",
+    "load": "node scripts/load-test.mjs",
+    "screenshots": "node scripts/screenshots.mjs",
+    "check-types": "tsc --noEmit",
+    "test:watch": "playwright test --headed"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.63.0",
+    "@types/node": "24.13.3",
+    "autocannon": "8.0.0",
+    "typescript": "6.0.3"
+  },
+  "packageManager": "pnpm@11.25.0",
+  "engines": {
+    "node": ">=24"
+  }
+}

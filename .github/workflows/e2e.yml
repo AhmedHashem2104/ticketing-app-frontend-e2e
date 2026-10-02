@@ -1,0 +1,44 @@
+name: E2E
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out the E2E suite
+        uses: actions/checkout@v4
+        with:
+          path: ticketing-app-e2e
+      - name: Check out the app monorepo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ vars.MONOREPO_REPOSITORY }}
+          path: ticketing-app-frontend-monorepo
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: ticketing-app-e2e/package.json
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Install
+        run: |
+          pnpm --dir ticketing-app-frontend-monorepo install --frozen-lockfile
+          pnpm --dir ticketing-app-e2e install --frozen-lockfile
+          pnpm --dir ticketing-app-e2e install:browsers
+      - name: Build and test
+        run: pnpm --dir ticketing-app-e2e test:full
+        env:
+          CI: "true"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: |
+            ticketing-app-e2e/playwright-report
+            ticketing-app-e2e/test-results
