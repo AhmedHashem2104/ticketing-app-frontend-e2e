@@ -53,7 +53,7 @@ test.describe("Accounts", () => {
 
   test("protected pages send you to log in and back again", async ({ page }) => {
     await page.goto("/tickets");
-    await expect(page).toHaveURL(/\/login\?next=%2Ftickets/);
+    await expect(page).toHaveURL(/\/en\/login\?next=%2Fen%2Ftickets/);
     await expect(page.getByText("Log in to continue.")).toBeVisible();
 
     await page.getByLabel("Mobile number").fill(DEMO.phone);
@@ -73,7 +73,7 @@ test.describe("Accounts", () => {
     await page.getByLabel("Mobile number").fill(DEMO.phone);
     await page.getByLabel("Password").fill(DEMO.password);
     await page.getByRole("button", { name: "Log in" }).click();
-    await expect(page).toHaveURL(/localhost:\d+\/$/);
+    await expect(page).toHaveURL(/localhost:\d+\/en$/);
     await page.reload();
     await expect(page.getByRole("button", { name: "Account menu: Omar Khaled" })).toBeVisible();
     // The session lives in an httpOnly cookie: page scripts can't read it and nothing is in storage.

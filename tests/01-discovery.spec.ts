@@ -9,7 +9,7 @@ test.describe("Discover events", () => {
     await expect(featured.getByText(/Sale opens in \d+d \d{2}:\d{2}/)).toBeVisible();
     await expect(page.getByRole("heading", { name: "On sale now" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Coming soon" })).toBeVisible();
-    await expect(page.getByRole("link", { name: "Start verification" })).toHaveAttribute("href", "/fan-id");
+    await expect(page.getByRole("link", { name: "Start verification" })).toHaveAttribute("href", "/en/fan-id");
   });
 
   test("category chips filter the on-sale grid", async ({ page }) => {

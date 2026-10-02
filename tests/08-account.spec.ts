@@ -51,7 +51,7 @@ test.describe("Account, security and lifecycle", () => {
     await expect(page.getByRole("link", { name: "Sign in" })).toBeVisible();
     expect((await page.context().cookies()).some((c) => c.name === "mp_session")).toBe(false);
     await page.goto("/tickets");
-    await expect(page).toHaveURL(/\/login\?next=%2Ftickets/);
+    await expect(page).toHaveURL(/\/en\/login\?next=%2Fen%2Ftickets/);
   });
 
   test("account page: preferences are saved and linked fans managed", async ({ page, request }) => {
